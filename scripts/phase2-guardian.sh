@@ -3,11 +3,13 @@
 # Sovereign Stack — Phase 2: Guardian
 # Firefox hardening + privacy extensions
 # ============================================================================
-set -euo pipefail
 
-GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; NC='\033[0m'
+export DEBIAN_FRONTEND=noninteractive
+
+GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; RED='\033[0;31m'; NC='\033[0m'
 log()  { echo -e "${GREEN}[✓]${NC} $1"; }
 warn() { echo -e "${YELLOW}[!]${NC} $1"; }
+err()  { echo -e "${RED}[✗]${NC} $1"; }
 step() { echo -e "\n${CYAN}━━━ $1 ━━━${NC}\n"; }
 
 echo -e "${CYAN}"
@@ -29,35 +31,74 @@ else
 fi
 
 step "Ensuring Firefox is installed"
+
+# Detect if Firefox is a snap (Ubuntu 22.04+)
+FIREFOX_IS_SNAP=false
+if command -v snap &>/dev/null && snap list firefox &>/dev/null 2>&1; then
+    FIREFOX_IS_SNAP=true
+    log "Firefox detected as snap package"
+fi
+
 if command -v firefox &>/dev/null; then
     log "Firefox already installed: $(firefox --version 2>/dev/null || echo 'detected')"
 else
     case $PKG in
-        apt)    sudo apt install -y firefox ;;
+        apt)    sudo apt-get install -y firefox ;;
         dnf)    sudo dnf install -y firefox ;;
         pacman) sudo pacman -S --noconfirm firefox ;;
         *)      warn "Install Firefox manually from https://www.mozilla.org/firefox/" ;;
     esac
-    log "Firefox installed"
+    if command -v firefox &>/dev/null; then
+        log "Firefox installed"
+    else
+        warn "Firefox installation may have failed. Continuing anyway."
+    fi
 fi
 
 step "Finding Firefox profile"
-FIREFOX_DIR="$HOME/.mozilla/firefox"
+
+# Determine the correct profile directory
+if $FIREFOX_IS_SNAP; then
+    FIREFOX_DIR="$HOME/snap/firefox/common/.mozilla/firefox"
+else
+    FIREFOX_DIR="$HOME/.mozilla/firefox"
+fi
+
+PROFILE=""
 if [[ -d "$FIREFOX_DIR" ]]; then
-    PROFILE=$(find "$FIREFOX_DIR" -maxdepth 1 -name "*.default-release" -type d | head -1)
+    PROFILE=$(find "$FIREFOX_DIR" -maxdepth 1 -name "*.default-release" -type d 2>/dev/null | head -1)
     if [[ -z "$PROFILE" ]]; then
-        PROFILE=$(find "$FIREFOX_DIR" -maxdepth 1 -name "*.default" -type d | head -1)
+        PROFILE=$(find "$FIREFOX_DIR" -maxdepth 1 -name "*.default" -type d 2>/dev/null | head -1)
     fi
 fi
 
 if [[ -z "${PROFILE:-}" ]]; then
-    warn "No Firefox profile found. Open Firefox once, close it, then re-run this script."
-    warn "Creating a temporary profile to apply settings..."
-    firefox --headless &
-    sleep 3
-    kill %1 2>/dev/null || true
-    sleep 1
-    PROFILE=$(find "$FIREFOX_DIR" -maxdepth 1 -name "*.default-release" -type d | head -1)
+    warn "No Firefox profile found. Creating a temporary profile..."
+    # Start Firefox headless and wait for profile creation
+    firefox --headless &>/dev/null &
+    FIREFOX_PID=$!
+    # Wait up to 10 seconds for the profile to appear
+    for i in $(seq 1 10); do
+        sleep 1
+        if [[ -d "$FIREFOX_DIR" ]]; then
+            PROFILE=$(find "$FIREFOX_DIR" -maxdepth 1 -name "*.default-release" -type d 2>/dev/null | head -1)
+            [[ -n "$PROFILE" ]] && break
+            PROFILE=$(find "$FIREFOX_DIR" -maxdepth 1 -name "*.default" -type d 2>/dev/null | head -1)
+            [[ -n "$PROFILE" ]] && break
+        fi
+    done
+    # Properly terminate Firefox
+    if kill -0 "$FIREFOX_PID" 2>/dev/null; then
+        kill "$FIREFOX_PID" 2>/dev/null || true
+        # Wait for process to actually exit (up to 5 seconds)
+        for i in $(seq 1 5); do
+            kill -0 "$FIREFOX_PID" 2>/dev/null || break
+            sleep 1
+        done
+        # Force kill if still running
+        kill -9 "$FIREFOX_PID" 2>/dev/null || true
+    fi
+    wait "$FIREFOX_PID" 2>/dev/null || true
 fi
 
 if [[ -n "${PROFILE:-}" ]]; then
@@ -136,8 +177,8 @@ echo ""
 step "Installing Tor Browser (optional, for maximum anonymity)"
 if ! command -v torbrowser-launcher &>/dev/null; then
     case $PKG in
-        apt)    sudo apt install -y torbrowser-launcher && log "Tor Browser launcher installed" ;;
-        dnf)    sudo dnf install -y torbrowser-launcher && log "Tor Browser launcher installed" ;;
+        apt)    sudo apt-get install -y torbrowser-launcher && log "Tor Browser launcher installed" || warn "Tor Browser launcher install failed" ;;
+        dnf)    sudo dnf install -y torbrowser-launcher && log "Tor Browser launcher installed" || warn "Tor Browser launcher install failed" ;;
         pacman) warn "Install from AUR: yay -S tor-browser" ;;
         *)      warn "Install Tor Browser from https://www.torproject.org/" ;;
     esac

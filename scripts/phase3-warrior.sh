@@ -3,11 +3,13 @@
 # Sovereign Stack — Phase 3: Warrior
 # Install FOSS replacements for Google apps
 # ============================================================================
-set -euo pipefail
 
-GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; NC='\033[0m'
+export DEBIAN_FRONTEND=noninteractive
+
+GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; RED='\033[0;31m'; NC='\033[0m'
 log()  { echo -e "${GREEN}[✓]${NC} $1"; }
 warn() { echo -e "${YELLOW}[!]${NC} $1"; }
+err()  { echo -e "${RED}[✗]${NC} $1"; }
 step() { echo -e "\n${CYAN}━━━ $1 ━━━${NC}\n"; }
 
 echo -e "${CYAN}"
@@ -24,20 +26,26 @@ if ! command -v flatpak &>/dev/null; then
     exit 1
 fi
 
+# Ensure flathub remote is available
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo 2>/dev/null || true
+
+INSTALL_FAILURES=0
+
 step "Installing FOSS desktop apps via Flatpak"
 
 install_app() {
     local id=$1
     local name=$2
     local replaces=$3
-    if flatpak list --app | grep -q "$id" 2>/dev/null; then
+    if flatpak list --app 2>/dev/null | grep -q "$id"; then
         log "$name already installed"
     else
         echo -n "  Installing $name (replaces $replaces)... "
-        if flatpak install -y flathub "$id" &>/dev/null; then
+        if flatpak install -y --noninteractive flathub "$id" &>/dev/null; then
             echo -e "${GREEN}done${NC}"
         else
-            echo -e "${YELLOW}failed — install manually${NC}"
+            echo -e "${YELLOW}failed — install manually: flatpak install flathub $id${NC}"
+            INSTALL_FAILURES=$((INSTALL_FAILURES + 1))
         fi
     fi
 }
@@ -46,8 +54,8 @@ install_app() {
 step "Office & Productivity"
 install_app "org.libreoffice.LibreOffice"         "LibreOffice"       "Google Docs/Sheets/Slides"
 install_app "org.signal.Signal"                    "Signal"            "Google Messages/WhatsApp"
-install_app "org.joplinapp.joplin"                 "Joplin"            "Google Keep"
-install_app "org.standardnotes.standardnotes"      "Standard Notes"    "Google Keep (alt)"
+install_app "net.cozic.joplin_desktop"             "Joplin"            "Google Keep"
+install_app "org.standardnotes.app"                "Standard Notes"    "Google Keep (alt)"
 install_app "org.thunderbird.Thunderbird"          "Thunderbird"       "Gmail client"
 
 # Media
@@ -74,6 +82,10 @@ echo ""
 echo "  Installed FOSS apps:"
 flatpak list --app --columns=name 2>/dev/null | head -20
 echo ""
+
+if [[ $INSTALL_FAILURES -gt 0 ]]; then
+    warn "$INSTALL_FAILURES app(s) failed to install. You can install them manually with flatpak."
+fi
 
 step "Manual steps remaining"
 echo ""

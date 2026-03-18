@@ -3,11 +3,13 @@
 # Sovereign Stack — Phase 1: Hero
 # Linux post-install essentials
 # ============================================================================
-set -euo pipefail
 
-GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; NC='\033[0m'
+export DEBIAN_FRONTEND=noninteractive
+
+GREEN='\033[0;32m'; YELLOW='\033[1;33m'; CYAN='\033[0;36m'; RED='\033[0;31m'; NC='\033[0m'
 log()  { echo -e "${GREEN}[✓]${NC} $1"; }
 warn() { echo -e "${YELLOW}[!]${NC} $1"; }
+err()  { echo -e "${RED}[✗]${NC} $1"; }
 step() { echo -e "\n${CYAN}━━━ $1 ━━━${NC}\n"; }
 
 echo -e "${CYAN}"
@@ -25,13 +27,13 @@ elif command -v dnf &>/dev/null; then
 elif command -v pacman &>/dev/null; then
     PKG="pacman"
 else
-    echo "Unsupported package manager. Install manually."
+    err "Unsupported package manager. Install manually."
     exit 1
 fi
 
 step "Updating system"
 case $PKG in
-    apt)    sudo apt update && sudo apt upgrade -y ;;
+    apt)    sudo apt-get update -y && sudo apt-get upgrade -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" ;;
     dnf)    sudo dnf upgrade -y ;;
     pacman) sudo pacman -Syu --noconfirm ;;
 esac
@@ -40,7 +42,7 @@ log "System updated"
 step "Installing essentials"
 PACKAGES="curl wget git htop neofetch vim unzip"
 case $PKG in
-    apt)    sudo apt install -y $PACKAGES ;;
+    apt)    sudo apt-get install -y $PACKAGES ;;
     dnf)    sudo dnf install -y $PACKAGES ;;
     pacman) sudo pacman -S --noconfirm $PACKAGES ;;
 esac
@@ -48,10 +50,12 @@ log "Essential packages installed"
 
 step "Installing Flatpak (universal app store)"
 case $PKG in
-    apt)    sudo apt install -y flatpak && sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo ;;
-    dnf)    sudo dnf install -y flatpak && sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo ;;
-    pacman) sudo pacman -S --noconfirm flatpak && sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo ;;
+    apt)    sudo apt-get install -y flatpak ;;
+    dnf)    sudo dnf install -y flatpak ;;
+    pacman) sudo pacman -S --noconfirm flatpak ;;
 esac
+# --if-not-exists ensures idempotency
+sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo 2>/dev/null || true
 log "Flatpak installed — you can now install apps from Flathub"
 
 step "Basic security"
@@ -65,11 +69,13 @@ if command -v ufw &>/dev/null; then
 elif command -v firewall-cmd &>/dev/null; then
     sudo systemctl enable --now firewalld
     log "Firewall (firewalld) enabled"
+else
+    warn "No firewall found. Consider installing ufw."
 fi
 
 # Enable automatic updates
-if command -v apt &>/dev/null; then
-    sudo apt install -y unattended-upgrades
+if [[ "$PKG" == "apt" ]]; then
+    sudo apt-get install -y unattended-upgrades
     sudo dpkg-reconfigure -plow unattended-upgrades 2>/dev/null || true
     log "Automatic security updates enabled"
 fi
