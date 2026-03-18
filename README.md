@@ -10,7 +10,7 @@
 [![Phases](https://img.shields.io/badge/phases-5-green)]()
 [![Services](https://img.shields.io/badge/self--hosted_services-10+-purple)]()
 
-[Start Now](#-phase-1-hero) · [Why This Matters](#-why) · [The Journey](#-the-journey) · [FAQ](#-faq)
+[Start Now](#phase-1-hero) · [Why This Matters](#why) · [The Journey](#the-journey) · [FAQ](#faq)
 
 ---
 
@@ -26,11 +26,11 @@
 
 ```
   Phase 1        Phase 2        Phase 3        Phase 4        Phase 5
-  ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐
-  │ HERO │ ──▶  │GUARD.│ ──▶  │WARR. │ ──▶  │KNIGHT│ ──▶  │SOVER.│
-  │      │      │      │      │      │      │      │      │      │
-  │  OS  │      │Browse│      │ Apps │      │ VPS  │      │ Full │
-  └──────┘      └──────┘      └──────┘      └──────┘      └──────┘
+  +------+      +------+      +------+      +------+      +------+
+  | HERO | ---> |GUARD.| ---> |WARR. | ---> |KNIGHT| ---> |SOVER.|
+  |      |      |      |      |      |      |      |      |      |
+  |  OS  |      |Browse|      | Apps |      | VPS  |      | Full |
+  +------+      +------+      +------+      +------+      +------+
    ~30min        ~30min        ~45min        ~60min        ~30min
 ```
 
@@ -41,6 +41,18 @@
 | **3** | **Warrior** | Replace Google apps | Email, cloud, passwords, search — all yours |
 | **4** | **Knight** | Deploy your own server | Self-hosted services on your VPS |
 | **5** | **Sovereign** | Connect everything | Full digital sovereignty, nothing leaks |
+
+### One-button install
+
+```bash
+# Local machine (phases 1-3):
+curl -fsSL https://raw.githubusercontent.com/Michae2xl/sovereign-stack/main/scripts/sovereign-local.sh | bash
+
+# VPS (phases 4-5):
+ssh root@YOUR_VPS_IP
+curl -fsSL https://raw.githubusercontent.com/Michae2xl/sovereign-stack/main/scripts/sovereign-vps.sh -o sovereign.sh
+bash sovereign.sh --all --domain yourdomain.com
+```
 
 ---
 
@@ -59,7 +71,6 @@
 ### Quick start
 
 ```bash
-# Download the Phase 1 script
 curl -fsSL https://raw.githubusercontent.com/Michae2xl/sovereign-stack/main/scripts/phase1-hero.sh -o phase1.sh
 bash phase1.sh
 ```
@@ -78,18 +89,14 @@ bash phase1.sh
 
 4. **Post-install essentials:**
    ```bash
-   # Update everything
    sudo apt update && sudo apt upgrade -y   # Debian/Ubuntu/Mint
-   # or
    sudo dnf upgrade -y                       # Fedora
-
-   # Install essentials
    sudo apt install -y curl wget git htop neofetch
    ```
 
 **Phase 1 complete.** You now own your operating system.
 
-→ [Full Phase 1 Guide](docs/phase1-hero.md)
+[Full Phase 1 Guide →](docs/phase1-hero.md)
 
 ---
 
@@ -142,7 +149,7 @@ bash phase2.sh
 
 **Phase 2 complete.** Your browsing is now private.
 
-→ [Full Phase 2 Guide](docs/phase2-guardian.md)
+[Full Phase 2 Guide →](docs/phase2-guardian.md)
 
 ---
 
@@ -197,7 +204,7 @@ bash phase3.sh
 
 **Phase 3 complete.** Google no longer has your daily data.
 
-→ [Full Phase 3 Guide](docs/phase3-warrior.md)
+[Full Phase 3 Guide →](docs/phase3-warrior.md)
 
 ---
 
@@ -244,10 +251,10 @@ bash phase4.sh --nextcloud --vaultwarden --searxng --domain yourdomain.com
 
 | Provider | Privacy | Price (8GB) | Notes |
 |----------|---------|-------------|-------|
-| **Hetzner** | GDPR | ~€9/mo | Best price/performance |
-| **Njalla** | Zero KYC | ~€15/mo | Crypto only, Pirate Bay founder |
-| **1984.is** | Iceland | ~€15/mo | Strongest free speech laws |
-| **Contabo** | OK | ~€6/mo | Cheapest option |
+| **Hetzner** | GDPR | ~EUR 9/mo | Best price/performance |
+| **Njalla** | Zero KYC | ~EUR 15/mo | Crypto only, Pirate Bay founder |
+| **1984.is** | Iceland | ~EUR 15/mo | Strongest free speech laws |
+| **Contabo** | OK | ~EUR 6/mo | Cheapest option |
 
 ### Requirements
 
@@ -260,7 +267,7 @@ bash phase4.sh --nextcloud --vaultwarden --searxng --domain yourdomain.com
 
 **Phase 4 complete.** You have your own infrastructure.
 
-→ [Full Phase 4 Guide](docs/phase4-knight.md)
+[Full Phase 4 Guide →](docs/phase4-knight.md)
 
 ---
 
@@ -272,13 +279,13 @@ bash phase4.sh --nextcloud --vaultwarden --searxng --domain yourdomain.com
 
 ### What happens here
 
-1. **Phone → VPS:** Nextcloud sync, Vaultwarden auto-fill, Matrix on Element
-2. **Desktop → VPS:** Nextcloud client, WireGuard always-on, SearXNG as default search
-3. **DNS → AdGuard:** All devices use your private DNS (blocks ads + trackers network-wide)
-4. **Email → Your server:** Stalwart Mail receives, ProtonMail forwards
-5. **Backups → Encrypted:** Rclone encrypts + uploads to Mega.nz / Backblaze B2
-6. **Monitoring → Grafana:** You see everything, nobody else does
-7. **Tor → .onion services:** Access your stack from anywhere without exposing your IP
+1. **Phone to VPS:** Nextcloud sync, Vaultwarden auto-fill, Matrix on Element
+2. **Desktop to VPS:** Nextcloud client, WireGuard always-on, SearXNG as default search
+3. **DNS to AdGuard:** All devices use your private DNS (blocks ads + trackers network-wide)
+4. **Email to your server:** Stalwart Mail receives, ProtonMail forwards
+5. **Backups encrypted:** Rclone encrypts + uploads to Mega.nz / Backblaze B2
+6. **Monitoring via Grafana:** You see everything, nobody else does
+7. **Tor .onion services:** Access your stack from anywhere without exposing your IP
 
 ### Quick start
 
@@ -303,7 +310,7 @@ bash phase5.sh --domain yourdomain.com
 
 **Phase 5 complete.** You are sovereign.
 
-→ [Full Phase 5 Guide](docs/phase5-sovereign.md)
+[Full Phase 5 Guide →](docs/phase5-sovereign.md)
 
 ---
 
@@ -340,7 +347,7 @@ A: Yes. Phase 1-3 require zero server knowledge. Phase 4-5 have scripts that do 
 A: You can complete all 5 phases in a weekend. But there's no rush — each phase is independent.
 
 **Q: Does it cost money?**
-A: Phases 1-3 are free. Phase 4-5 need a VPS (~€6-18/month). That's less than a Netflix subscription for owning your entire digital life.
+A: Phases 1-3 are free. Phase 4-5 need a VPS (~EUR 6-18/month). That's less than a Netflix subscription for owning your entire digital life.
 
 **Q: Can I do this on Mac?**
 A: Phases 2-5 work on macOS. Phase 1 (Linux) is optional if you're on Mac — skip it and start at Phase 2.
@@ -349,7 +356,7 @@ A: Phases 2-5 work on macOS. Phase 1 (Linux) is optional if you're on Mac — sk
 A: Phase 3 covers app replacements for Android/iOS. For maximum privacy: GrapheneOS on a Google Pixel.
 
 **Q: Is this related to Freedom Stack?**
-A: Yes! [Freedom Stack](https://github.com/Michae2xl/freedom-stack) is the **Agent Privacy Cloud** — infrastructure for AI agents. Sovereign Stack is the **human journey** — your personal digital freedom. They complement each other: Phase 4 can optionally include the Agent Privacy Cloud.
+A: Yes. [Freedom Stack](https://github.com/Michae2xl/freedom-stack) is the **Agent Privacy Cloud** — infrastructure for AI agents. Sovereign Stack is the **human journey** — your personal digital freedom. They complement each other: Phase 4 can optionally include the Agent Privacy Cloud.
 
 ---
 
@@ -357,21 +364,25 @@ A: Yes! [Freedom Stack](https://github.com/Michae2xl/freedom-stack) is the **Age
 
 ```
 sovereign-stack/
-├── README.md              ← You are here
-├── LICENSE                ← AGPL v3
+├── README.md                    <- You are here
+├── LICENSE                      <- AGPL v3
+├── CONTRIBUTING.md
+├── skills/
+│   └── soberana/SKILL.md        <- Claude Code skill
 ├── scripts/
-│   ├── phase1-hero.sh         ← Linux post-install essentials
-│   ├── phase2-guardian.sh     ← Firefox hardening + extensions
-│   ├── phase3-warrior.sh      ← App replacements helper
-│   ├── phase4-knight.sh       ← VPS self-hosted deploy
-│   └── phase5-sovereign.sh    ← Full integration + hardening
-├── docs/
-│   ├── phase1-hero.md         ← Detailed Phase 1 guide
-│   ├── phase2-guardian.md     ← Detailed Phase 2 guide
-│   ├── phase3-warrior.md      ← Detailed Phase 3 guide
-│   ├── phase4-knight.md       ← Detailed Phase 4 guide
-│   └── phase5-sovereign.md    ← Detailed Phase 5 guide
-└── CONTRIBUTING.md
+│   ├── sovereign-local.sh       <- One-button local (phases 1-3)
+│   ├── sovereign-vps.sh         <- One-button VPS (phases 4-5)
+│   ├── phase1-hero.sh           <- Linux post-install essentials
+│   ├── phase2-guardian.sh       <- Firefox hardening + extensions
+│   ├── phase3-warrior.sh        <- App replacements helper
+│   ├── phase4-knight.sh         <- VPS self-hosted deploy
+│   └── phase5-sovereign.sh      <- Full integration + hardening
+└── docs/
+    ├── phase1-hero.md           <- Detailed Phase 1 guide
+    ├── phase2-guardian.md       <- Detailed Phase 2 guide
+    ├── phase3-warrior.md        <- Detailed Phase 3 guide
+    ├── phase4-knight.md         <- Detailed Phase 4 guide
+    └── phase5-sovereign.md      <- Detailed Phase 5 guide
 ```
 
 ---
@@ -393,7 +404,7 @@ sovereign-stack/
 **Your sovereignty starts with Phase 1.**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Michae2xl/sovereign-stack/main/scripts/phase1-hero.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Michae2xl/sovereign-stack/main/scripts/sovereign-local.sh | bash
 ```
 
 [Star this repo](../../stargazers) if you believe privacy is a right, not a product.
