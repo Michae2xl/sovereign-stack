@@ -368,7 +368,7 @@ sovereign-stack/
 ├── LICENSE                      <- AGPL v3
 ├── CONTRIBUTING.md
 ├── skills/
-│   └── soberana/SKILL.md        <- Claude Code skill
+│   └── sovereign/SKILL.md        <- Claude Code skill
 ├── scripts/
 │   ├── sovereign-local.sh       <- One-button local (phases 1-3)
 │   ├── sovereign-vps.sh         <- One-button VPS (phases 4-5)
@@ -417,7 +417,7 @@ curl -fsSL https://raw.githubusercontent.com/Michae2xl/sovereign-stack/main/scri
 
 Privacy costs money. If Sovereign Stack helped you break free, consider supporting the project.
 
-**Zcash (Shielded — fully private):**
+**Zcash (Shielded — fully private):** Send from any shielded wallet ([Zcash FOSS](https://f-droid.org/en/packages/co.electriccoin.zcash.foss/), Zashi, Ywallet)
 ```
 u12rrgyaz7hwyzf0px29ka43tvk7nu92w7mzc99yv9ld3pg96fp4ef0mxe5kd0j5544yc33jqe66fd5s0fjv7uvsxh0uz24c7fuw44wfwcg2g74jgg2ukmpvc0l4a7r56sgjrra35fy4f0k3spjn5uh6kqxx5elmuv3ajd7zjs8s973e0n
 ```

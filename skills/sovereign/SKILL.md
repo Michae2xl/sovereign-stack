@@ -1,9 +1,9 @@
 ---
-name: soberana
-description: "Sovereign Stack — complete digital privacy for humans in one command. From Hero to Sovereign in 5 phases: Linux, hardened browser, FOSS apps, self-hosted VPS (Nextcloud, Vaultwarden, SearXNG, Immich, Matrix, Jitsi, AdGuard, WireGuard, Forgejo, Stalwart Mail), full integration with HTTPS, encrypted backups, and Tor .onion. Triggers: 'soberana', 'sovereign', 'sovereign stack', 'human privacy', 'degoogle', 'digital freedom', 'self-hosted human', 'replace google', 'hero to sovereign'."
+name: sovereign
+description: "Sovereign Stack — complete digital privacy for humans in one command. From Hero to Sovereign in 5 phases: Linux, hardened browser, FOSS apps, self-hosted VPS (Nextcloud, Vaultwarden, SearXNG, Immich, Matrix, Jitsi, AdGuard, WireGuard, Forgejo, Stalwart Mail), full integration with HTTPS, encrypted backups, and Tor .onion. Triggers: 'sovereign', 'sovereign stack', 'human privacy', 'degoogle', 'digital freedom', 'self-hosted human', 'replace google', 'hero to sovereign'."
 ---
 
-# Skill Soberana — Sovereign Stack
+# Skill Sovereign — Sovereign Stack
 
 > **From Hero to Sovereign in one command.** Complete digital privacy for humans.
 
