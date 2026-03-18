@@ -105,6 +105,7 @@ bash phase1.sh
 | Chrome (Google sees everything) | Firefox hardened + uBlock Origin |
 | Google Search | SearXNG / DuckDuckGo / Brave Search |
 | Chrome password manager | Bitwarden (or KeePassXC offline) |
+| No anonymous browsing | Tor Browser (maximum anonymity) |
 
 ### Quick start
 
