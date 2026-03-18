@@ -1,74 +1,74 @@
 ---
 name: soberana
-description: "Sovereign Stack — instalação completa de privacidade digital para humanos. Do Hero ao Soberano em 1 comando. 5 fases: Linux, browser hardened, apps FOSS, VPS self-hosted (Nextcloud, Vaultwarden, SearXNG, Immich, Matrix, Jitsi, AdGuard, WireGuard, Forgejo, Stalwart Mail), integração total com HTTPS, backups criptografados e Tor .onion. Triggers: 'soberana', 'sovereign', 'sovereign stack', 'privacidade humana', 'degoogle', 'digital freedom', 'self-hosted humano', 'substituir google', 'hero to sovereign'."
+description: "Sovereign Stack — complete digital privacy for humans in one command. From Hero to Sovereign in 5 phases: Linux, hardened browser, FOSS apps, self-hosted VPS (Nextcloud, Vaultwarden, SearXNG, Immich, Matrix, Jitsi, AdGuard, WireGuard, Forgejo, Stalwart Mail), full integration with HTTPS, encrypted backups, and Tor .onion. Triggers: 'soberana', 'sovereign', 'sovereign stack', 'human privacy', 'degoogle', 'digital freedom', 'self-hosted human', 'replace google', 'hero to sovereign'."
 ---
 
 # Skill Soberana — Sovereign Stack
 
-> **Do Hero ao Soberano em 1 comando.** Privacidade digital completa para humanos.
+> **From Hero to Sovereign in one command.** Complete digital privacy for humans.
 
 **Repo:** https://github.com/Michae2xl/sovereign-stack
 
 ---
 
-## O Que Esta Skill Faz
+## What This Skill Does
 
-Instala TUDO do Sovereign Stack de uma vez:
+Installs the full Sovereign Stack at once:
 
-1. **Phase 1 — Hero:** Post-install Linux (atualiza, ferramentas, Flatpak, firewall)
-2. **Phase 2 — Guardian:** Firefox hardened (user.js, extensões, Tor Browser)
-3. **Phase 3 — Warrior:** Apps FOSS via Flatpak (Signal, Bitwarden, FreeTube, LibreOffice, Element, etc)
-4. **Phase 4 — Knight:** VPS com 10+ serviços self-hosted (Nextcloud, Vaultwarden, SearXNG, Immich, Matrix, Jitsi, AdGuard, Forgejo)
-5. **Phase 5 — Sovereign:** Caddy auto-HTTPS, WireGuard VPN, backups criptografados, server hardening, Tor .onion
+1. **Phase 1 — Hero:** Linux post-install (update, tools, Flatpak, firewall)
+2. **Phase 2 — Guardian:** Firefox hardened (user.js, extensions, Tor Browser)
+3. **Phase 3 — Warrior:** FOSS apps via Flatpak (Signal, Bitwarden, FreeTube, LibreOffice, Element, etc)
+4. **Phase 4 — Knight:** VPS with 10+ self-hosted services (Nextcloud, Vaultwarden, SearXNG, Immich, Matrix, Jitsi, AdGuard, Forgejo)
+5. **Phase 5 — Sovereign:** Caddy auto-HTTPS, WireGuard VPN, encrypted backups, server hardening, Tor .onion
 
 ---
 
-## Instalação Completa (1 Comando)
+## Full Install (1 Command)
 
-### Na máquina local (Fases 1-3):
+### Local machine (Phases 1-3):
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Michae2xl/sovereign-stack/main/scripts/sovereign-local.sh | bash
 ```
 
-### No VPS (Fases 4-5):
+### VPS (Phases 4-5):
 ```bash
-ssh root@SEU_VPS_IP
+ssh root@YOUR_VPS_IP
 curl -fsSL https://raw.githubusercontent.com/Michae2xl/sovereign-stack/main/scripts/sovereign-vps.sh -o sovereign.sh
-bash sovereign.sh --all --domain seudominio.com
+bash sovereign.sh --all --domain yourdomain.com
 ```
 
-### Sem domínio (funciona via IP + Tor .onion):
+### No domain (works via IP + Tor .onion):
 ```bash
 bash sovereign.sh --all
 ```
 
 ---
 
-## Como Usar Esta Skill
+## How To Use This Skill
 
-### Quando o usuário chegar, pergunte:
+### When the user arrives, ask:
 
-1. **Onde quer instalar?** (máquina local? VPS? ambos?)
-2. **Tem Linux?** (se não, começa na Fase 1)
-3. **Tem VPS?** (se não, recomende Hetzner/Njalla/1984.is)
-4. **Tem domínio?** (opcional — funciona sem)
-5. **O que quer priorizar?** (tudo? só alguns serviços?)
+1. **Where to install?** (local machine? VPS? both?)
+2. **Running Linux?** (if not, start at Phase 1)
+3. **Have a VPS?** (if not, recommend Hetzner/Njalla/1984.is)
+4. **Have a domain?** (optional — works without one)
+5. **What to prioritize?** (everything? specific services only?)
 
-### Baseado nas respostas:
+### Based on answers:
 
-| Situação | Comando |
-|----------|---------|
-| Tudo de uma vez (local + VPS) | `sovereign-local.sh` + `sovereign-vps.sh --all` |
-| Só máquina local (sem VPS) | `sovereign-local.sh` (Fases 1-3) |
-| Só VPS (já tem Linux configurado) | `sovereign-vps.sh --all --domain X` |
-| Serviços específicos | `sovereign-vps.sh --nextcloud --vaultwarden --searxng` |
+| Situation | Command |
+|-----------|---------|
+| Everything at once (local + VPS) | `sovereign-local.sh` + `sovereign-vps.sh --all` |
+| Local machine only (no VPS) | `sovereign-local.sh` (Phases 1-3) |
+| VPS only (Linux already set up) | `sovereign-vps.sh --all --domain X` |
+| Specific services | `sovereign-vps.sh --nextcloud --vaultwarden --searxng` |
 
 ---
 
-## Serviços Instalados (VPS)
+## Installed Services (VPS)
 
-| Serviço | Substitui | Porta | Subdomínio |
-|---------|-----------|-------|------------|
+| Service | Replaces | Port | Subdomain |
+|---------|----------|------|-----------|
 | **Nextcloud + MariaDB** | Google Drive/Docs/Calendar | 8080 | cloud. |
 | **Vaultwarden** | LastPass/1Password | 8081 | vault. |
 | **SearXNG** | Google Search | 8082 | search. |
@@ -82,19 +82,19 @@ bash sovereign.sh --all
 | **Stalwart Mail** | Gmail (server) | 25/143 | mail. |
 | **Caddy** | — (reverse proxy) | 80/443 | — |
 
-### Infraestrutura
-| Serviço | Função |
-|---------|--------|
-| UFW + fail2ban | Firewall + proteção SSH |
-| Rclone + GPG | Backup criptografado diário |
+### Infrastructure
+| Service | Function |
+|---------|----------|
+| UFW + fail2ban | Firewall + SSH protection |
+| Rclone + GPG | Daily encrypted backup |
 | Tor | .onion hidden services |
 
 ---
 
-## Apps Instalados (Local — Flatpak)
+## Installed Apps (Local — Flatpak)
 
-| App | Substitui |
-|-----|-----------|
+| App | Replaces |
+|-----|----------|
 | Signal | WhatsApp/Google Messages |
 | Element | Discord/Slack |
 | Bitwarden | Chrome passwords |
@@ -105,106 +105,106 @@ bash sovereign.sh --all
 | Thunderbird | Gmail client |
 | VLC | Google Play Movies |
 | GIMP | Google Photos editor |
-| VSCodium | VS Code (sem telemetria) |
+| VSCodium | VS Code (without telemetry) |
 
 ---
 
-## Jornada Visual
+## Journey Overview
 
 ```
   Phase 1        Phase 2        Phase 3        Phase 4        Phase 5
-  ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐
-  │ HERO │ ──▶  │GUARD.│ ──▶  │WARR. │ ──▶  │KNIGHT│ ──▶  │SOVER.│
-  │      │      │      │      │      │      │      │      │      │
-  │  OS  │      │Browse│      │ Apps │      │ VPS  │      │ Full │
-  └──────┘      └──────┘      └──────┘      └──────┘      └──────┘
+  +------+      +------+      +------+      +------+      +------+
+  | HERO | ---> |GUARD.| ---> |WARR. | ---> |KNIGHT| ---> |SOVER.|
+  |      |      |      |      |      |      |      |      |      |
+  |  OS  |      |Browse|      | Apps |      | VPS  |      | Full |
+  +------+      +------+      +------+      +------+      +------+
    ~30min        ~30min        ~45min        ~60min        ~30min
 
-  LOCAL ◄──────────────────────┤  VPS  ├──────────────────►
-  (Fases 1-3)                  (Fases 4-5)
+  LOCAL <-----------------------|  VPS  |----------------------->
+  (Phases 1-3)                  (Phases 4-5)
 ```
 
 ---
 
-## Checklist Final de Soberania
+## Final Sovereignty Checklist
 
-- [ ] Linux instalado com disk encryption
+- [ ] Linux installed with disk encryption
 - [ ] Firefox hardened + uBlock Origin + Privacy Badger
-- [ ] Tor Browser instalado
-- [ ] Apps FOSS instalados (Signal, Bitwarden, FreeTube, etc)
-- [ ] VPS com todos os serviços rodando
-- [ ] Caddy com HTTPS automático
-- [ ] WireGuard VPN em todos os dispositivos
-- [ ] AdGuard DNS bloqueando ads/trackers
-- [ ] Nextcloud sincronizando em todos os dispositivos
-- [ ] Vaultwarden com todas as senhas
-- [ ] Immich fazendo backup das fotos
-- [ ] SearXNG como busca padrão
-- [ ] Backups criptografados diários
-- [ ] Google data exportada e conta esvaziada
+- [ ] Tor Browser installed
+- [ ] FOSS apps installed (Signal, Bitwarden, FreeTube, etc)
+- [ ] VPS with all services running
+- [ ] Caddy with auto-HTTPS
+- [ ] WireGuard VPN on all devices
+- [ ] AdGuard DNS blocking ads/trackers
+- [ ] Nextcloud syncing on all devices
+- [ ] Vaultwarden with all passwords
+- [ ] Immich backing up photos
+- [ ] SearXNG as default search
+- [ ] Daily encrypted backups
+- [ ] Google data exported and account emptied
 
 ---
 
-## Requisitos
+## Requirements
 
-### Máquina Local
-- Qualquer computador com Linux (ou disposição pra instalar)
-- 4GB+ RAM, 20GB+ disco
+### Local Machine
+- Any computer with Linux (or willingness to install)
+- 4GB+ RAM, 20GB+ disk
 
-### VPS (Fases 4-5)
-| | Mínimo | Recomendado |
-|---|--------|-------------|
+### VPS (Phases 4-5)
+| | Minimum | Recommended |
+|---|---------|-------------|
 | RAM | 4GB | 8GB+ |
 | CPU | 2 vCPUs | 4+ vCPUs |
-| Disco | 40GB | 80GB+ |
+| Disk | 40GB | 80GB+ |
 | OS | Ubuntu 22.04 | Ubuntu 24.04 |
-| Custo | ~€6/mês | ~€12/mês |
+| Cost | ~EUR 6/mo | ~EUR 12/mo |
 
-### VPS Providers Privacy-Friendly
-| Provider | Privacidade | Preço (8GB) |
-|----------|-------------|-------------|
-| Hetzner | GDPR | ~€9/mês |
-| Njalla | Zero KYC, crypto | ~€15/mês |
-| 1984.is | Islândia | ~€15/mês |
-| Contabo | OK | ~€6/mês |
+### Privacy-Friendly VPS Providers
+| Provider | Privacy | Price (8GB) |
+|----------|---------|-------------|
+| Hetzner | GDPR | ~EUR 9/mo |
+| Njalla | Zero KYC, crypto | ~EUR 15/mo |
+| 1984.is | Iceland | ~EUR 15/mo |
+| Contabo | Standard | ~EUR 6/mo |
 
 ---
 
 ## Troubleshooting
 
 ```bash
-# Ver status dos containers
+# Check container status
 docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" | grep sovereign
 
-# Logs de um serviço
+# Service logs
 docker logs sovereign-nextcloud --tail 50
 
-# Restart tudo
+# Restart all
 cd /opt/sovereign-stack && docker compose restart
 
-# Verificar credenciais
+# Check credentials
 cat /root/sovereign-stack-credentials.txt
 
-# Verificar firewall
+# Check firewall
 ufw status
 
-# Verificar WireGuard
+# Check WireGuard
 wg show
 ```
 
 ---
 
-## Relação com Freedom Stack
+## Relation to Freedom Stack
 
-| Projeto | Público | Foco |
-|---------|---------|------|
-| **Sovereign Stack** (esta skill) | Humanos | Privacidade pessoal, degoogle, self-hosted |
-| **Freedom Stack** (skill agent-shielded) | Devs/Agents AI | Agent Privacy Cloud (Ollama, n8n, Qdrant, Tor) |
+| Project | Audience | Focus |
+|---------|----------|-------|
+| **Sovereign Stack** (this skill) | Humans | Personal privacy, degoogle, self-hosted |
+| **Freedom Stack** (agent-shielded skill) | Devs/AI Agents | Agent Privacy Cloud (Ollama, n8n, Qdrant, Tor) |
 
-Podem rodar **juntos no mesmo VPS** — são complementares.
+They can run **together on the same VPS** — fully complementary.
 
 ```bash
-# Instalar sovereign (humano) + freedom (agents) no mesmo VPS:
-bash sovereign.sh --all --domain seudominio.com
+# Install sovereign (human) + freedom (agents) on the same VPS:
+bash sovereign.sh --all --domain yourdomain.com
 bash install.sh --agents --searxng --tor --security
 ```
