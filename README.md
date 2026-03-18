@@ -12,8 +12,7 @@
 
 [Start Now](#phase-1-hero) · [The Journey](#the-journey) · [FAQ](#faq) · [Why](#why)
 
-**Claude Code Skills:**
-[Sovereign](skills/sovereign/SKILL.md) · [Agent Shielded](https://github.com/Michae2xl/freedom-stack/blob/main/skills/agent-shielded/SKILL.md)
+**[Claude Code Skill](skills/sovereign/SKILL.md)**
 
 ---
 
